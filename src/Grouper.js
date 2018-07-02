@@ -2,8 +2,10 @@ const fs = require('fs');
 
 module.exports = class Grouper {
 
-  constructor(client) {
-    this.client = client;
+  constructor(config = {}) {
+    this.client = config.client;
+    this.indicator = config.indicator;
+    this.groupIndicator = config.groupIndicator;
   }
 
   init() {
@@ -33,7 +35,29 @@ module.exports = class Grouper {
   }
 
   moveChannel(parentChannel, childChannel) {
-    
+    this.init();
   }
 
+  clearChannels() {
+    this.client.channels.map(function(collection) {
+      let channel = this.client.channels.get(collection.id);
+
+      if(!channel.name.startsWith(this.groupIndicator)) return;
+      
+      if(channel.members.array().length) return;
+      
+      channel.delete()
+        .catch(function(error) {
+          //console.log(error);
+        });
+
+    }, this);
+  }
+
+  checkOrder() {
+    this.client.channels.map(function(collection) {
+      let channel = this.client.channels.get(collection.id);
+      console.log(channel.name+ " " +channel.position)
+    }, this);
+  }
 };

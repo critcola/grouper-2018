@@ -6,7 +6,11 @@ const indicator = String.fromCodePoint('0x1F3AE');
 const groupIndicator = String.fromCodePoint('0x2501');
 
 const client = new Discord.Client();
-const grouper = new Grouper(client);
+const grouper = new Grouper({
+  client: client,
+  indicator: indicator,
+  groupIndicator: groupIndicator
+});
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -15,10 +19,16 @@ client.on('ready', () => {
 
 client.on('voiceStateUpdate', function(oldMember, member) {
 
+  if(oldMember) {
+    grouper.clearChannels();
+  }
+
   if(!member.voiceChannelID) return;
 
   let channel = member.guild.channels.get(member.voiceChannelID);
 
+  grouper.clearChannels();
+  
   if(!channel.name.startsWith(indicator)) return;
 
   channel.clone(groupIndicator+' Group', true)
@@ -27,16 +37,30 @@ client.on('voiceStateUpdate', function(oldMember, member) {
       newChannel
         .edit({
           bitrate: 96000,
-          position: 100,
+          position: channel.position,
           userLimit: channel.userLimit
         })
         .then(function(newChannel) {
-          grouper.moveChannel(channel, newChannel);
+          //grouper.init();
           member.setVoiceChannel(newChannel)
+        })
+        .catch(function(error) {
+          consolel.log(error);
         });
 
     });
 
 });
+
+client.on('channelDelete', function(channel){
+  grouper.init();
+});
+
+client.on('message', msg => {
+  if (msg.content === '!check') {
+    grouper.checkOrder();
+  }
+});
+
 
 client.login(process.env.DISCORD_TOKEN);

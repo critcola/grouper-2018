@@ -27,10 +27,11 @@ client.on('voiceStateUpdate', function(oldMember, member) {
       newChannel
         .edit({
           bitrate: 96000,
-          position: channel.position + 1,
+          position: 100,
           userLimit: channel.userLimit
         })
         .then(function(newChannel) {
+          grouper.moveChannel(channel, newChannel);
           member.setVoiceChannel(newChannel)
         });
 

@@ -1,0 +1,24 @@
+{
+  "name": "grouper",
+  "version": "1.0.0",
+  "description": "A auto grouping discord bot",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/Rickyxstar/grouper.git"
+  },
+  "author": "Rickyxstar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/Rickyxstar/grouper/issues"
+  },
+  "homepage": "https://gitlab.com/Rickyxstar/grouper#README",
+  "dependencies": {
+    "discord.js": "*",
+    "uws": "*",
+    "dotenv": "*"
+  }
+}

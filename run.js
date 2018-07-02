@@ -12,15 +12,11 @@ client.on('ready', () => {
 
 client.on('voiceStateUpdate', function(oldMember, member) {
 
-  if(!member.voiceChannelID) {
-    return null;
-  }
+  if(!member.voiceChannelID) return;
 
   let channel = member.guild.channels.get(member.voiceChannelID);
 
-  if(!channel.name.startsWith(indicator)) {
-    return null;
-  }
+  if(!channel.name.startsWith(indicator)) return;
 
   channel.clone(groupIndicator+' Group', true)
     .then(function(newChannel) {

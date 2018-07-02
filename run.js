@@ -6,10 +6,11 @@ const indicator = String.fromCodePoint('0x1F3AE');
 const groupIndicator = String.fromCodePoint('0x2501');
 
 const client = new Discord.Client();
-const grouper = new Grouper();
+const grouper = new Grouper(client);
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  grouper.init();
 });
 
 client.on('voiceStateUpdate', function(oldMember, member) {

@@ -1,10 +1,12 @@
 const Discord = require('discord.js');
 const dotenv = require('dotenv').config();
+const Grouper = require('./src/Grouper');
 
 const indicator = String.fromCodePoint('0x1F3AE');
 const groupIndicator = String.fromCodePoint('0x2501');
 
 const client = new Discord.Client();
+const grouper = new Grouper();
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);

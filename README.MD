@@ -11,7 +11,7 @@ That there would be too many hoops to jump though...
 # instalation
 
 ```sh
-git clone git@gitlab.com:Rickyxstar/grouper.git
+git clone https://github.com/critcola/grouper-2018.git
 
 cd grouper && npm install
 

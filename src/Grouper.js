@@ -9,33 +9,21 @@ module.exports = class Grouper {
   }
 
   init() {
-    let channels = [];
-    let i = 0;
+    let i = 1;
 
-    this.client.channels.map(function(collection) {
-      let channel = this.client.channels.get(collection.id);
-      
-      channel.edit({
-        position: i
-      });
-
-      channels.push({
-        id: collection.id,
-        type: collection.type,
-        name: collection.name,
-        position: i
-      });
-      
-      i++;
-    }, this);
-    
-    fs.writeFile('channels.json', JSON.stringify(channels, null, 2), function(error) {
-      if (error) console.log(error);
+    let channelsSorted = this.client.channels.sort(function(a, b) {
+      if (a.position < b.position)
+        return -1;
+      if (a.position > b.position)
+        return 1;
+      return 0;
     });
-  }
+    
+    channelsSorted.map(function(collection) {
+      collection.edit({position: i});
+      i++;
+    });
 
-  moveChannel(parentChannel, childChannel) {
-    this.init();
   }
 
   clearChannels() {
@@ -51,13 +39,6 @@ module.exports = class Grouper {
           //console.log(error);
         });
 
-    }, this);
-  }
-
-  checkOrder() {
-    this.client.channels.map(function(collection) {
-      let channel = this.client.channels.get(collection.id);
-      console.log(channel.name+ " " +channel.position)
     }, this);
   }
 };

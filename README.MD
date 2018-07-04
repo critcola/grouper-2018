@@ -13,7 +13,7 @@ That there would be too many hoops to jump though...
 ```sh
 git clone https://github.com/critcola/grouper-2018.git
 
-cd grouper && npm install
+cd grouper-2018 && npm install
 
 ```
 

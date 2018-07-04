@@ -38,27 +38,27 @@ client.on('voiceStateUpdate', function(oldMember, member) {
         .edit({
           bitrate: 96000,
           position: channel.position,
-          userLimit: channel.userLimit
+          userLimit: channel.userLimit,
+          parent: channel.parentID
         })
         .then(function(newChannel) {
-          //grouper.init();
           member.setVoiceChannel(newChannel)
         })
         .catch(function(error) {
-          consolel.log(error);
+          console.log(error);
         });
 
     });
 
 });
 
-client.on('channelDelete', function(channel){
+client.on('channelDelete', function() {
   grouper.init();
 });
 
 client.on('message', msg => {
-  if (msg.content === '!check') {
-    grouper.checkOrder();
+  if (msg.content === '!clear') {
+    grouper.clearChannels();
   }
 });
 
